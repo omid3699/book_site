@@ -1,6 +1,10 @@
+from dataclasses import fields
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import EmailField
+from django.forms import ModelForm
+
+from books.models import Book
 
 User = get_user_model()
 
@@ -17,3 +21,20 @@ class RegisterForm(UserCreationForm):
             "password2",
             "facolty",
         ]
+
+
+class BookForm(ModelForm):
+    class Meta:
+        model = Book
+        fields = [
+            "name",
+            "author_name",
+            "description",
+            "cover",
+            "pdf",
+            "facolty",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super(BookForm, self).__init__(*args, **kwargs)
+        self.fields["facolty"].required = False if self.instance else True

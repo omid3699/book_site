@@ -1,13 +1,15 @@
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
 
 from books.models import Book
 
-from .forms import RegisterForm
+from .forms import BookForm, RegisterForm
 from .models import User
 
 # Create your views here.
@@ -42,3 +44,17 @@ class AllBooksView(LoginRequiredMixin, ListView):
             return Book.objects.filter(facolty=user.facolty)
         else:
             return redirect(reverse_lazy("books:home"))
+
+
+class AddBookView(LoginRequiredMixin, CreateView):
+    template_name = "accounts/add_book.html"
+    form_class = BookForm
+
+    def form_valid(self, form):
+        user = self.request.user
+        book = form.save(commit=False)
+        book.uploaded_by = user
+        if not user.is_superuser and not user.student:
+            book.facolty = user.facolty
+        book.save()
+        return redirect(reverse_lazy("accounts:all_books"))

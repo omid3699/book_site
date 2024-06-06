@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LoginView
 from django.urls import path, reverse_lazy
 
-from .views import AllBooksView, RegisterView, logout
+from .views import AddBookView, AllBooksView, RegisterView, logout
 
 app_name = "accounts"
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path("logout/", logout, name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
     path("all_books/", AllBooksView.as_view(), name="all_books"),
+    path("add_book/", AddBookView.as_view(), name="add_book"),
 ]

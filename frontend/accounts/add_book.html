@@ -8,14 +8,14 @@
     <div class="row">
       <div class="col-8 mx-auto">
         {% include 'accounts/partials/errors.html' %}
-        <form method="post" class="form row">
+        <form method="post" class="form row" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="col-6">
             <div class="form-groupt">
-              <label for="">Username</label>
-              {% render_field form.username class="form-control" placeholder="نام کاربری" %}
-              {% if form.username.errors %}
-                {% for error in form.username.errors %}
+              <label for="">Name</label>
+              {% render_field form.name class="form-control" placeholder="نام کتاب" %}
+              {% if form.name.errors %}
+                {% for error in form.name.errors %}
                   <div class="alert alert-danger mt-3">{{ error }}</div>
                 {% endfor %}
               {% endif %}
@@ -23,10 +23,10 @@
           </div>
           <div class="col-6">
             <div class="form-groupt">
-              <label for="">Email</label>
-              {% render_field form.email class="form-control" placeholder="آدرس ایمیل" %}
-              {% if form.email.errors %}
-                {% for error in form.email.errors %}
+              <label for="">Author Name</label>
+              {% render_field form.author_name class="form-control" placeholder="نام نویسنده" %}
+              {% if form.author_name.errors %}
+                {% for error in form.author_name.errors %}
                   <div class="alert alert-danger mt-3">{{ error }}</div>
                 {% endfor %}
               {% endif %}
@@ -34,10 +34,10 @@
           </div>
           <div class="col-6">
             <div class="form-groupt">
-              <label for="">First Name</label>
-              {% render_field form.first_name class="form-control" placeholder="نام " %}
-              {% if form.first_name.errors %}
-                {% for error in form.fitst_name.errors %}
+              <label>Cover Image</label>
+              {% render_field form.cover class="form-control" %}
+              {% if form.cover.errors %}
+                {% for error in form.cover.errors %}
                   <div class="alert alert-danger mt-3">{{ error }}</div>
                 {% endfor %}
               {% endif %}
@@ -45,37 +45,27 @@
           </div>
           <div class="col-6">
             <div class="form-groupt">
-              <label for="">Last Name</label>
-              {% render_field form.last_name class="form-control" placeholder="تخلص" %}
-              {% if form.last_name.errors %}
-                {% for error in form.last_name.errors %}
+              <label for="">PDF</label>
+              {% render_field form.pdf class="form-control" accept="application/pdf" %}
+              {% if form.pdf.errors %}
+                {% for error in form.pdf.errors %}
                   <div class="alert alert-danger mt-3">{{ error }}</div>
                 {% endfor %}
               {% endif %}
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-12">
             <div class="form-groupt">
-              <label for="">Password</label>
-              {% render_field form.password1 class="form-control" placeholder="رمز عبور" %}
-              {% if form.password1.errors %}
-                {% for error in form.password1.errors %}
+              <label for="">Description</label>
+              {% render_field form.description class="form-control" placeholder="لطفا یک توضیحات مختصر درباره کتاب وارد کنید" %}
+              {% if form.description.errors %}
+                {% for error in form.description.errors %}
                   <div class="alert alert-danger mt-3">{{ error }}</div>
                 {% endfor %}
               {% endif %}
             </div>
           </div>
-          <div class="col-6">
-            <div class="form-groupt">
-              <label for="">Repeat Password</label>
-              {% render_field form.password2 class="form-control" placeholder="تکرار رمز عبور" %}
-              {% if form.password2.errors %}
-                {% for error in form.password2.errors %}
-                  <div class="alert alert-danger mt-3">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div>
+          {% if request.user.is_superuser %}
           <div class="col-12">
             <div class="form-groupt">
               <label for="">Facolty</label>
@@ -87,8 +77,9 @@
               {% endif %}
             </div>
           </div>
-          <button type="submit" class="btn btn-lg btn-success rounded btn-outline p-3 mt-3 ml-auto">Register Your Account <i
-              class="fas fa-user m-2"></i></button>
+          {% endif %}
+          <button type="submit" class="btn btn-lg btn-success rounded btn-outline p-3 mt-3 ml-auto">Save <i
+              class="fas fa-save m-2"></i></button>
         </form>
       </div>
     </div>
