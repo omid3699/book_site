@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
 from django.db.models import Q
 from .models import Book, Facolty
 
 # Create your views here.
 
-
+@login_required
 def home_view(request):
     user = request.user
     books = Book.objects.filter(facolty=user.facolty)
@@ -13,25 +15,25 @@ def home_view(request):
         request=request, template_name="books/index.html", context={"books": books}
     )
 
-
+@login_required
 def book_detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
     return render(
         request=request, template_name="books/detail.html", context={"book": book}
     )
 
-class FacoltyList(ListView):
+class FacoltyList(LoginRequiredMixin, ListView):
     template_name = "books/facolty_list.html"
     model = Facolty
     queryset = Facolty.objects.all()
     context_object_name = "facolty_list"
-
+@login_required
 def facolty_book_list(request, pk):
     facolty = get_object_or_404(Facolty, pk=pk)
     books = facolty.books.all()
     return render(request=request, template_name="books/facolty_book_list.html", context={"facolty":facolty, "books":books})
 
-
+@login_required
 def search(request):
     q = request.GET.get("q")
     if q:
