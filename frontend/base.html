@@ -39,11 +39,11 @@
                     </li>
                     {% if request.user.is_authenticated %}
                     <li class="nav-item"><a href="{% url 'accounts:logout' %}" class="nav-link btn btn-danger">خروج از سیستم</a></li>
-                    {% if request.user.teacher or request.user.is_superuser %}
-                    <li class="nav-item"><a class="nav-link btn btn-success">پنل مدیریت</a></li>
+                    {% if not request.user.is_student or request.user.is_superuser %}
+                    <li class="nav-item"><a href="{% url 'accounts:all_books' %}" class="nav-link">لیست کتاب ها</a></li>
                     {% endif %}
                     {% else %}
-                    <li class="nav-item"><a class="nav-link btn btn-success"> ایجاد حساب جدید</a></li>
+                    <li class="nav-item"><a href="{% url 'accounts:register' %}" class="nav-link btn btn-success"> ایجاد حساب جدید</a></li>
                     <li class="nav-item"><a href="{% url 'accounts:login' %}" class="nav-link btn btn-primary">ورود به سیستم</a></li>
                     {% endif %}
                     
