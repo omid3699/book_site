@@ -1,0 +1,16 @@
+{% extends 'books/base.html' %}
+
+
+{% block content %}
+<section class="page-section">
+<div class="container">
+  <div class="row">
+    {% for f in facolty_list %}
+      <div class="col-md-3 col-sm-2 mx-3">
+          <h1 class="text-primary text-center"><a href="#">{{ f.name }}</a><span class="badge bg-success rounded-circle mx-3" style="display: inline;">{{ f.books.count }}</span></h1>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+</section>
+{% endblock content %}

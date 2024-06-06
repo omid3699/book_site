@@ -1,0 +1,12 @@
+__pycache__
+__pycache__/*
+*__pycache__
+*.pyc
+
+.vscode
+
+media
+db.sqlite3*
+refreshdb.sh
+tempdata
+books.db

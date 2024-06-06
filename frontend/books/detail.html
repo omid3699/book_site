@@ -1,0 +1,43 @@
+{% extends 'books/base.html' %}
+
+{% block content %}
+<section class="page-section bg-secondary">
+  <div class="conrainer">
+    <div class="row">
+      <div class="col-12 mx-auto mb-8">
+        <h1 class="text-primary text-center">{{ book.name }}</h1>
+      </div>
+      <div class="col-md-6 sm-12">
+        <img src="{{ book.cover.url }}" class="img-fluid rounded" style="height: min-content; width: min-content;">
+      </div>
+      <div class="col-md-6 sm-12">
+        <table class="table table-head-fixed ">
+          <thead>
+            <tr>
+              <th class="text-primary">نام کتاب</th>
+              <th class="text-primary">نام نویسنده</th>
+              <th class="text-primary">پوهنحًی</th>
+              <th class="text-primary">آپلود شده توسط</th>
+              <th class="text-primary">تاریخ آپلود</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td>{{ book.name | truncatechars:20 }}</td>
+                <td>{{ book.author_name }}</td>
+                <td>{{ book.facolty }}</td>
+                <td>{{ book.uploaded_by }}</td>
+                <td>{{ book.created }}</td>
+              </tr>
+          </tbody>
+        </table>
+        <div>
+          <h4 class="text-primary text-center">توضیحات</h4>
+          {{ book.description }}
+        </div>
+        <a href="{{ book.pdf.url }}" download class="btn btn-xl btn-primary" style="margin: 3rem auto auto auto;"><i class="fas fa-download fw-bold" style="color: greenyellow; margin-right: 1rem; font-size: larger;"></i>  دانلود کتاب</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
