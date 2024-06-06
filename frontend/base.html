@@ -37,14 +37,14 @@
                     <li class="nav-item">
                         <a href="{% url 'books:facolty_list' %}" class="nav-link">پوهنخي ها</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="#search">جستوجو</a></li>
                     {% if request.user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link btn btn-danger">خروج از سیستم</a></li>
+                    <li class="nav-item"><a href="{% url 'accounts:logout' %}" class="nav-link btn btn-danger">خروج از سیستم</a></li>
                     {% if request.user.teacher or request.user.is_superuser %}
                     <li class="nav-item"><a class="nav-link btn btn-success">پنل مدیریت</a></li>
                     {% endif %}
                     {% else %}
-                    <li class="nav-item"><a class="nav-link btn btn-primary">ورود به سیستم</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-success"> ایجاد حساب جدید</a></li>
+                    <li class="nav-item"><a href="{% url 'accounts:login' %}" class="nav-link btn btn-primary">ورود به سیستم</a></li>
                     {% endif %}
                     
                 </ul>
