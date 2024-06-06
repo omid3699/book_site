@@ -1,9 +1,7 @@
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import BaseModelForm
-from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
 
@@ -73,3 +71,15 @@ class UpdateBook(LoginRequiredMixin, UpdateView):
             book.facolty = user.facolty
         book.save()
         return redirect(reverse_lazy("accounts:all_books"))
+
+
+@login_required
+def delete_book(request, pk):
+    if not request.user.is_superuser and request.user.is_student:
+        return redirect("books:home")
+    book = get_object_or_404(Book, pk=pk)
+    if not request.user.is_superuser:
+        if not book.facolty == request.user.facolty:
+            return redirect("accounts:all_books")
+    book.delete()
+    return redirect("accounts:all_books")
