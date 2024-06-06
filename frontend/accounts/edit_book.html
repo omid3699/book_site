@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+<!-- {% render_field form.password class="form-control" placeholder="Password" %} -->
+{% block content %}
+{% include 'books/partials/header.html' %}
+<section class="page-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-8 mx-auto">
+        {% include 'accounts/partials/errors.html' %}
+        <form method="post" class="form row" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="col-6">
+            <div class="form-groupt">
+              <label for="">Name</label>
+              {% render_field form.name class="form-control" placeholder="نام کتاب" %}
+              {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-groupt">
+              <label for="">Author Name</label>
+              {% render_field form.author_name class="form-control" placeholder="نام نویسنده" %}
+              {% if form.author_name.errors %}
+                {% for error in form.author_name.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-groupt">
+              <label>Cover Image</label>
+              {% render_field form.cover class="form-control" %}
+              {% if form.cover.errors %}
+                {% for error in form.cover.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-groupt">
+              <label for="">PDF</label>
+              {% render_field form.pdf class="form-control" accept="application/pdf" %}
+              {% if form.pdf.errors %}
+                {% for error in form.pdf.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-groupt">
+              <label for="">Description</label>
+              {% render_field form.description class="form-control" placeholder="لطفا یک توضیحات مختصر درباره کتاب وارد کنید" %}
+              {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          {% if request.user.is_superuser %}
+          <div class="col-12">
+            <div class="form-groupt">
+              <label for="">Facolty</label>
+              {% render_field form.facolty class="form-control" placeholder="پوهنحی" %}
+              {% if form.facolty.errors %}
+                {% for error in form.facolty.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          <button type="submit" class="btn btn-lg btn-success rounded btn-outline p-3 mt-3 ml-auto">Save <i
+              class="fas fa-save m-2"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

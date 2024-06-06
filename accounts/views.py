@@ -5,7 +5,7 @@ from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 
 from books.models import Book
 
@@ -49,6 +49,21 @@ class AllBooksView(LoginRequiredMixin, ListView):
 class AddBookView(LoginRequiredMixin, CreateView):
     template_name = "accounts/add_book.html"
     form_class = BookForm
+
+    def form_valid(self, form):
+        user = self.request.user
+        book = form.save(commit=False)
+        book.uploaded_by = user
+        if not user.is_superuser and not user.student:
+            book.facolty = user.facolty
+        book.save()
+        return redirect(reverse_lazy("accounts:all_books"))
+
+
+class UpdateBook(LoginRequiredMixin, UpdateView):
+    template_name = "accounts/edit_book.html"
+    form_class = BookForm
+    model = Book
 
     def form_valid(self, form):
         user = self.request.user
