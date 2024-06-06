@@ -9,7 +9,7 @@ class User(AbstractUser):
     facolty = models.ForeignKey(
         to="books.Facolty", related_name="users", on_delete=models.CASCADE, null=True
     )
-    is_student = models.BooleanField(default=True) # True
+    is_student = models.BooleanField(default=True)  # True
 
     def __str__(self) -> str:
         return self.get_full_name()
