@@ -1,0 +1,31 @@
+{% extends 'books/base.html' %}
+
+{% block content %}
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">کتاب های</h2>
+            <h3 class="section-subheading text-muted"><b>{{ facolty.name }}</b> پوهنحًی</h3>
+        </div>
+        <div class="row">
+            {% for book in books %}
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Portfolio item 1-->
+                    <div class="portfolio-item shadow">
+                        <a class="portfolio-link" href="{% url 'books:book_detail' pk=book.pk %}">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="{{ book.cover.url }}" style="height: 20rem; width: fit-content;"/>
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">{{ book.name | truncatechars:20 }}</div>
+                            <div class="portfolio-caption-subheading text-muted">{{ book.uploaded_by }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

@@ -25,3 +25,8 @@ class FacoltyList(ListView):
     model = Facolty
     queryset = Facolty.objects.all()
     context_object_name = "facolty_list"
+
+def facolty_book_list(request, pk):
+    facolty = get_object_or_404(Facolty, pk=pk)
+    books = facolty.books.all()
+    return render(request=request, template_name="books/facolty_book_list.html", context={"facolty":facolty, "books":books})
