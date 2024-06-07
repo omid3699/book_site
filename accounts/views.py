@@ -102,3 +102,12 @@ class UpdateFacolty(LoginRequiredMixin, UpdateView):
     form_class = FacoltyForm
     model = Facolty
     success_url = reverse_lazy("accounts:facolties")
+
+
+@login_required
+def delete_facolty(request, pk):
+    if not request.user.is_superuser:
+        return redirect(reverse_lazy("books:home"))
+    f = get_object_or_404(Facolty, pk=pk)
+    f.delete()
+    return redirect(reverse_lazy("accounts:facolties"))

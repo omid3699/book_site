@@ -10,6 +10,7 @@ from .views import (
     UpdateBook,
     UpdateFacolty,
     delete_book,
+    delete_facolty,
     logout,
 )
 
@@ -28,4 +29,5 @@ urlpatterns = [
     path("facolties/", AllFacoltyView.as_view(), name="facolties"),
     path("facolty/create/", CreateFacolty.as_view(), name="create_facolty"),
     path("facolty/update/<int:pk>", UpdateFacolty.as_view(), name="update_facolty"),
+    path("facolty/delete/<int:pk>", delete_facolty, name="delete_facolty"),
 ]
