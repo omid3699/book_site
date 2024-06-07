@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% include 'books/partials/header.html' %}
+<section class="page-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+      </div>
+      <div class="col-12">
+        <a href="{% url 'accounts:add_book' %}" class="btn btn-success mb-3" style="display: block; border: 1px blue solid; border-radius: 5px;"><i class="fas fa-plus p-1 m-1"></i>افزودن پوهنحًی جدید</a>
+        <div class="card card-primary shadow">
+          <div class="card-header">
+            <h3 class="card-title text-black text-center">لیست پوهنحًی  ها</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-head-fixed ">
+              <thead>
+                <tr>
+                  <th class="text-primary">نام پوهنحًی</th>
+                  <th class="text-primary">تعداد کتاب</th>
+                  <th class="text-primary">تعداد محصل</th>
+                  <th class="text-primary">تعداد استاد</th>
+                  <th class="text-primary">ابزار ها</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for f in facolties %}
+                  <tr>
+                    <td>{{ f.name | truncatechars:20 }}</td>
+                    <td>{{ f.books.count }}</td>
+                    <td>{{ f.student_count }}</td>
+                    <td>{{ f.teacher_count }}</td>
+                    <td>
+                      <a href="" class="btn btn-success mx-1"><i class="fas fa-play"></i></a>
+                      <a href="" class="btn btn-primary mx-1"><i class="fas fa-edit"></i></a>
+                      <a href="" class="btn btn-danger mx-1"><i class="fas fa-trash"></i></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock content %}

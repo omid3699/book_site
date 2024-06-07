@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
 
-from books.models import Book
+from books.models import Book, Facolty
 
 from .forms import BookForm, RegisterForm
 from .models import User
@@ -83,3 +83,9 @@ def delete_book(request, pk):
             return redirect("accounts:all_books")
     book.delete()
     return redirect("accounts:all_books")
+
+
+class AllFacoltyView(LoginRequiredMixin, ListView):
+    template_name = "accounts/all_facolty.html"
+    model = Facolty
+    context_object_name = "facolties"

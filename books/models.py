@@ -11,6 +11,12 @@ class Facolty(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    def student_count(self):
+        return self.users.filter(is_student=True).count()
+
+    def teacher_count(self):
+        return self.users.filter(is_student=False).count()
+
 
 class Book(models.Model):
     name = models.CharField(max_length=150)
