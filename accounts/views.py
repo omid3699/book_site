@@ -8,6 +8,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 from books.models import Book, Facolty
 
 from .forms import BookForm, FacoltyForm, RegisterForm
+from .mixins import SuperuserOnlyMixin, SuperuserOrTeacherMixin
 from .models import User
 
 # Create your views here.
@@ -29,7 +30,7 @@ class RegisterView(CreateView):
         return super().form_valid(form)
 
 
-class AllBooksView(LoginRequiredMixin, ListView):
+class AllBooksView(LoginRequiredMixin, SuperuserOrTeacherMixin, ListView):
     template_name = "accounts/all_books.html"
     model = Book
     context_object_name = "books"
@@ -44,7 +45,7 @@ class AllBooksView(LoginRequiredMixin, ListView):
             return redirect(reverse_lazy("books:home"))
 
 
-class AddBookView(LoginRequiredMixin, CreateView):
+class AddBookView(LoginRequiredMixin, SuperuserOrTeacherMixin, CreateView):
     template_name = "accounts/add_book.html"
     form_class = BookForm
 
@@ -58,7 +59,7 @@ class AddBookView(LoginRequiredMixin, CreateView):
         return redirect(reverse_lazy("accounts:all_books"))
 
 
-class UpdateBook(LoginRequiredMixin, UpdateView):
+class UpdateBook(LoginRequiredMixin, SuperuserOrTeacherMixin, UpdateView):
     template_name = "accounts/edit_book.html"
     form_class = BookForm
     model = Book
@@ -85,19 +86,19 @@ def delete_book(request, pk):
     return redirect("accounts:all_books")
 
 
-class AllFacoltyView(LoginRequiredMixin, ListView):
+class AllFacoltyView(LoginRequiredMixin, SuperuserOnlyMixin, ListView):
     template_name = "accounts/all_facolty.html"
     model = Facolty
     context_object_name = "facolties"
 
 
-class CreateFacolty(LoginRequiredMixin, CreateView):
+class CreateFacolty(LoginRequiredMixin, SuperuserOnlyMixin, CreateView):
     template_name = "accounts/add_facolty.html"
     form_class = FacoltyForm
     success_url = reverse_lazy("accounts:facolties")
 
 
-class UpdateFacolty(LoginRequiredMixin, UpdateView):
+class UpdateFacolty(LoginRequiredMixin, SuperuserOnlyMixin, UpdateView):
     template_name = "accounts/add_facolty.html"
     form_class = FacoltyForm
     model = Facolty
@@ -113,7 +114,7 @@ def delete_facolty(request, pk):
     return redirect(reverse_lazy("accounts:facolties"))
 
 
-class TeacherList(LoginRequiredMixin, ListView):
+class TeacherList(LoginRequiredMixin, SuperuserOnlyMixin, ListView):
     template_name = "accounts/teacher_list.html"
     model = User
     queryset = User.objects.filter(is_student=False)
@@ -121,7 +122,7 @@ class TeacherList(LoginRequiredMixin, ListView):
     context_object_name = "teachers"
 
 
-class AddTeacher(LoginRequiredMixin, CreateView):
+class AddTeacher(LoginRequiredMixin, SuperuserOnlyMixin, CreateView):
     form_class = RegisterForm
     template_name = "accounts/add_teacher.html"
     success_url = reverse_lazy("accounts:teacher_list")
@@ -155,7 +156,7 @@ def user_actions(request, pk, action):
     return redirect("accounts:student_list")
 
 
-class StudentList(LoginRequiredMixin, ListView):
+class StudentList(LoginRequiredMixin, SuperuserOnlyMixin, ListView):
     template_name = "accounts/student_list.html"
     model = User
     queryset = User.objects.filter(is_student=True)
@@ -163,7 +164,7 @@ class StudentList(LoginRequiredMixin, ListView):
     context_object_name = "students"
 
 
-class AddStudent(LoginRequiredMixin, CreateView):
+class AddStudent(LoginRequiredMixin, SuperuserOnlyMixin, CreateView):
     form_class = RegisterForm
     template_name = "accounts/add_student.html"
     success_url = reverse_lazy("accounts:student_list")
