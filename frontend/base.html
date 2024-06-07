@@ -33,7 +33,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="/">خانه</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">خانه</a></li>\
                     <li class="nav-item">
                         <a href="{% url 'books:facolty_list' %}" class="nav-link">پوهنخي ها</a>
                     </li>
@@ -44,6 +44,7 @@
                         {% endif %}
                         {% if request.user.is_superuser %}
                             <li class="nav-item"><a href="{% url 'accounts:facolties' %}" class="nav-link">لیست پوهنخي ها</a></li>
+                            <li class="nav-item"><a href="{% url 'accounts:teacher_list' %}" class="nav-link">لیست استاد ها</a></li>
                         {% endif %}
                     {% else %}
                     <li class="nav-item"><a href="{% url 'accounts:register' %}" class="nav-link btn btn-success"> ایجاد حساب جدید</a></li>

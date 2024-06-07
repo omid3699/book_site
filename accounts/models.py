@@ -13,7 +13,7 @@ class User(AbstractUser):
     )
     is_student = models.BooleanField(default=True)  # True
 
-    objects = UserManager()
+    # objects = UserManager()
 
     def __str__(self) -> str:
         return self.get_full_name()

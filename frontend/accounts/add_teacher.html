@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+<!-- {% render_field form.password class="form-control" placeholder="Password" %} -->
+{% block content %}
+{% include 'books/partials/header.html' %}
+<section class="page-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-8 mx-auto">
+        <h2 class="text-center">افزودن استاد جدید</h2>
+        {% include 'accounts/partials/errors.html' %}
+        <form method="post" class="form row">
+          {% csrf_token %}
+          <div class="col-6">
+            <div class="form-groupt">
+              <label for="">Username</label>
+              {% render_field form.username class="form-control" placeholder="نام کاربری" %}
+              {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-groupt">
+              <label for="">Email</label>
+              {% render_field form.email class="form-control" placeholder="آدرس ایمیل" %}
+              {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-groupt">
+              <label for="">First Name</label>
+              {% render_field form.first_name class="form-control" placeholder="نام " %}
+              {% if form.first_name.errors %}
+                {% for error in form.fitst_name.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-groupt">
+              <label for="">Last Name</label>
+              {% render_field form.last_name class="form-control" placeholder="تخلص" %}
+              {% if form.last_name.errors %}
+                {% for error in form.last_name.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-groupt">
+              <label for="">Password</label>
+              {% render_field form.password1 class="form-control" placeholder="رمز عبور" %}
+              {% if form.password1.errors %}
+                {% for error in form.password1.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-groupt">
+              <label for="">Repeat Password</label>
+              {% render_field form.password2 class="form-control" placeholder="تکرار رمز عبور" %}
+              {% if form.password2.errors %}
+                {% for error in form.password2.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-groupt">
+              <label for="">Facolty</label>
+              {% render_field form.facolty class="form-control" placeholder="پوهنحی" %}
+              {% if form.facolty.errors %}
+                {% for error in form.facolty.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <button type="submit" class="btn btn-lg btn-success rounded btn-outline p-3 mt-3 ml-auto">افزودن استاد <i
+              class="fas fa-save m-2"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
