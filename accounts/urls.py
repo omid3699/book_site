@@ -3,6 +3,7 @@ from django.urls import path, reverse_lazy
 
 from .views import (
     AddBookView,
+    AddStudent,
     AddTeacher,
     AllBooksView,
     AllFacoltyView,
@@ -35,7 +36,8 @@ urlpatterns = [
     path("facolty/update/<int:pk>", UpdateFacolty.as_view(), name="update_facolty"),
     path("facolty/delete/<int:pk>", delete_facolty, name="delete_facolty"),
     path("teachers/", TeacherList.as_view(), name="teacher_list"),
-    path("students/", StudentList.as_view(), name="student_list"),
     path("teachers/add", AddTeacher.as_view(), name="teacher_add"),
+    path("students/", StudentList.as_view(), name="student_list"),
+    path("students/add", AddStudent.as_view(), name="student_add"),
     path("useractions/<int:pk>/<str:action>", user_actions, name="actions"),
 ]

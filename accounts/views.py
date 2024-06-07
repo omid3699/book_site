@@ -116,6 +116,54 @@ def delete_facolty(request, pk):
 class TeacherList(LoginRequiredMixin, ListView):
     template_name = "accounts/teacher_list.html"
     model = User
-    queryset = User.objects.teachers()
+    queryset = User.objects.filter(is_student=False)
 
     context_object_name = "teachers"
+
+
+class AddTeacher(LoginRequiredMixin, CreateView):
+    form_class = RegisterForm
+    template_name = "accounts/add_teacher.html"
+    success_url = reverse_lazy("accounts:teacher_list")
+
+    def form_valid(self, form):
+
+        user = form.save(commit=False)
+
+        user.is_student = False
+        user.save()
+
+        return redirect(reverse_lazy("accounts:teacher_list"))
+
+
+@login_required
+def user_actions(request, pk, action):
+    if not request.user.is_superuser:
+        return redirect(reverse_lazy("books:home"))
+    user = get_object_or_404(User, pk=pk)
+    match action:
+        case "activate":
+            user.is_active = True
+            user.save()
+        case "deactivate":
+            user.is_active = False
+            user.save()
+        case "delete":
+            user.delete()
+    if not user.is_student:
+        return redirect("accounts:teacher_list")
+    return redirect("accounts:student_list")
+
+
+class StudentList(LoginRequiredMixin, ListView):
+    template_name = "accounts/student_list.html"
+    model = User
+    queryset = User.objects.filter(is_student=True)
+
+    context_object_name = "students"
+
+
+class AddStudent(LoginRequiredMixin, CreateView):
+    form_class = RegisterForm
+    template_name = "accounts/add_student.html"
+    success_url = reverse_lazy("accounts:student_list")
