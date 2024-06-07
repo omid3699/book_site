@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 
-from books.models import Book
+from books.models import Book, Facolty
 
 User = get_user_model()
 
@@ -38,3 +38,9 @@ class BookForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(BookForm, self).__init__(*args, **kwargs)
         self.fields["facolty"].required = False if self.instance else True
+
+
+class FacoltyForm(ModelForm):
+    class Meta:
+        model = Facolty
+        fields = ["name"]

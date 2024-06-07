@@ -7,7 +7,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 
 from books.models import Book, Facolty
 
-from .forms import BookForm, RegisterForm
+from .forms import BookForm, FacoltyForm, RegisterForm
 from .models import User
 
 # Create your views here.
@@ -89,3 +89,9 @@ class AllFacoltyView(LoginRequiredMixin, ListView):
     template_name = "accounts/all_facolty.html"
     model = Facolty
     context_object_name = "facolties"
+
+
+class CreateFacolty(LoginRequiredMixin, CreateView):
+    template_name = "accounts/add_facolty.html"
+    form_class = FacoltyForm
+    success_url = reverse_lazy("accounts:facolties")

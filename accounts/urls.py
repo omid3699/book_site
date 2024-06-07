@@ -5,6 +5,7 @@ from .views import (
     AddBookView,
     AllBooksView,
     AllFacoltyView,
+    CreateFacolty,
     RegisterView,
     UpdateBook,
     delete_book,
@@ -24,4 +25,5 @@ urlpatterns = [
     path("edit_book/<int:pk>", UpdateBook.as_view(), name="edit_book"),
     path("delete_book/<int:pk>", delete_book, name="delete_book"),
     path("facolties/", AllFacoltyView.as_view(), name="facolties"),
+    path("facolty/create/", CreateFacolty.as_view(), name="create_facolty"),
 ]

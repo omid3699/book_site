@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+{% include 'books/partials/header.html' %}
+<section class="page-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-8 mx-auto px-auto">
+        {% include 'accounts/partials/errors.html' %}
+        <form method="post" class="form row">
+          {% csrf_token %}
+          <div class="col-10">
+            <div class="form-group">
+              {% render_field form.name class="form-control p-3" placeholder="نام پوهنحًی" %}
+              {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                  <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-gruop">
+              <button type="submit" class="btn btn-primary form-control p-3">افزودن<i class="fas fa-plus ml-2" style="margin-left: 5px; font-size: larger; color: chartreuse;"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
