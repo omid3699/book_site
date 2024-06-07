@@ -111,3 +111,11 @@ def delete_facolty(request, pk):
     f = get_object_or_404(Facolty, pk=pk)
     f.delete()
     return redirect(reverse_lazy("accounts:facolties"))
+
+
+class TeacherList(LoginRequiredMixin, ListView):
+    template_name = "accounts/teacher_list.html"
+    model = User
+    queryset = User.objects.teachers()
+
+    context_object_name = "teachers"
