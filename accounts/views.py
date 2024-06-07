@@ -95,3 +95,10 @@ class CreateFacolty(LoginRequiredMixin, CreateView):
     template_name = "accounts/add_facolty.html"
     form_class = FacoltyForm
     success_url = reverse_lazy("accounts:facolties")
+
+
+class UpdateFacolty(LoginRequiredMixin, UpdateView):
+    template_name = "accounts/add_facolty.html"
+    form_class = FacoltyForm
+    model = Facolty
+    success_url = reverse_lazy("accounts:facolties")
