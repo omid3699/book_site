@@ -32,28 +32,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="col-6">
-            <div class="form-groupt">
-              <label>Cover Image</label>
-              {% render_field form.cover class="form-control" %}
-              {% if form.cover.errors %}
-                {% for error in form.cover.errors %}
-                  <div class="alert alert-danger mt-3">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="form-groupt">
-              <label for="">PDF</label>
-              {% render_field form.pdf class="form-control" accept="application/pdf" %}
-              {% if form.pdf.errors %}
-                {% for error in form.pdf.errors %}
-                  <div class="alert alert-danger mt-3">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div>
+        
           <div class="col-12">
             <div class="form-groupt">
               <label for="">Description</label>
@@ -65,8 +44,19 @@
               {% endif %}
             </div>
           </div>
+          <div class="col-6">
+            <div class="form-groupt">
+              <label for="">PDF</label>
+              {% render_field form.pdf class="form-control" accept="application/pdf" %}
+              {% if form.pdf.errors %}
+                {% for error in form.pdf.errors %}
+                <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
           {% if request.user.is_superuser %}
-          <div class="col-12">
+          <div class="col-6">
             <div class="form-groupt">
               <label for="">Facolty</label>
               {% render_field form.facolty class="form-control" placeholder="پوهنحی" %}

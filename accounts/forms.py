@@ -30,7 +30,6 @@ class BookForm(ModelForm):
             "name",
             "author_name",
             "description",
-            "cover",
             "pdf",
             "facolty",
         ]

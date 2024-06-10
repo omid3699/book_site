@@ -1,9 +1,15 @@
+import os
+
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
+from pdf2image import convert_from_path
+from PIL import Image
 
 from books.models import Book, Facolty
 
@@ -53,9 +59,45 @@ class AddBookView(LoginRequiredMixin, SuperuserOrTeacherMixin, CreateView):
         user = self.request.user
         book = form.save(commit=False)
         book.uploaded_by = user
+
+        # If the user is not a superuser and not a student, assign the user's faculty to the book
         if not user.is_superuser and not user.student:
-            book.facolty = user.facolty
+            book.faculty = (
+                user.faculty
+            )  # Corrected the typo from "facolty" to "faculty"
+
+        # Check if a PDF file was uploaded
+        if "pdf" in self.request.FILES:
+            pdf_file = self.request.FILES["pdf"]
+
+            # Save the PDF file temporarily
+            if isinstance(pdf_file, InMemoryUploadedFile):
+                pdf_path = default_storage.save(f"temp/{pdf_file.name}", pdf_file)
+                pdf_path = default_storage.path(pdf_path)
+            elif isinstance(pdf_file, TemporaryUploadedFile):
+                pdf_path = pdf_file.temporary_file_path()
+            else:
+                pdf_path = None
+
+            if pdf_path:
+                # Convert the first page of the PDF to an image
+                images = convert_from_path(pdf_path, first_page=0, last_page=1)
+
+                if images:
+                    image = images[0]
+                    # Save the cover image to the specified path
+                    cover_dir = os.path.join("media", "book_covers")
+                    os.makedirs(cover_dir, exist_ok=True)
+                    cover_path = os.path.join(cover_dir, f"{book.id}_cover.png")
+                    image.save(cover_path, "PNG")
+
+                    # Set the cover attribute of the book instance
+                    book.cover = f"book_covers/{book.id}_cover.png"
+
+        # Save the book instance
         book.save()
+
+        # Redirect to the 'all_books' view
         return redirect(reverse_lazy("accounts:all_books"))
 
 

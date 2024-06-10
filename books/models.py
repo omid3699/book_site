@@ -22,7 +22,7 @@ class Book(models.Model):
     name = models.CharField(max_length=150)
     author_name = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField()
-    cover = models.ImageField(upload_to="book_covers")
+    cover = models.ImageField(upload_to="book_covers", null=True)
     pdf = models.FileField(upload_to="pdf_books")
     facolty = models.ForeignKey(
         to=Facolty, on_delete=models.CASCADE, related_name="books"
