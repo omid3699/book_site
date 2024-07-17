@@ -201,7 +201,7 @@ def user_actions(request, pk, action):
 class StudentList(LoginRequiredMixin, SuperuserOnlyMixin, ListView):
     template_name = "accounts/student_list.html"
     model = User
-    queryset = User.objects.filter(is_student=True)
+    queryset = User.objects.filter(is_student=True, is_superuser=False)
 
     context_object_name = "students"
 

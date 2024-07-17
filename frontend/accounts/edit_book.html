@@ -32,18 +32,7 @@
               {% endif %}
             </div>
           </div>
-          <div class="col-6">
-            <div class="form-groupt">
-              <label>Cover Image</label>
-              {% render_field form.cover class="form-control" %}
-              {% if form.cover.errors %}
-                {% for error in form.cover.errors %}
-                  <div class="alert alert-danger mt-3">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div>
-          <div class="col-6">
+          <div class="col-12">
             <div class="form-groupt">
               <label for="">PDF</label>
               {% render_field form.pdf class="form-control" accept="application/pdf" %}

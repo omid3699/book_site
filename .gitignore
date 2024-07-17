@@ -7,6 +7,4 @@ __pycache__/*
 
 media
 db.sqlite3*
-refreshdb.sh
-tempdata
 books.db

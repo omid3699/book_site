@@ -1,8 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from .managers import UserManager
-
 # Create your models here.
 
 
@@ -11,9 +9,9 @@ class User(AbstractUser):
     facolty = models.ForeignKey(
         to="books.Facolty", related_name="users", on_delete=models.CASCADE, null=True
     )
-    is_student = models.BooleanField(default=True)  # True
-
-    # objects = UserManager()
+    is_student = models.BooleanField(
+        default=True
+    )  # True for Students False for teachers and admins
 
     def __str__(self) -> str:
         return self.get_full_name()

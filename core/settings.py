@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-@v_%ae_8+h4@_&m54s1)^je@f6mf1))9f6e3eucft#kt3!x9b$"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # True for development False for Production
 
 ALLOWED_HOSTS = []
 
@@ -111,7 +111,7 @@ LOGIN_REDIRECT_URL = "/"
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "fa-ir"
 
 TIME_ZONE = "UTC"
 
