@@ -12688,7 +12688,7 @@ p {
 }
 
 #mainNav .navbar-brand img {
-  height: 1.5rem;
+  height: 3.5rem;
 }
 
 #mainNav .navbar-nav .nav-item .nav-link {
@@ -12751,7 +12751,7 @@ header.masthead {
   padding-bottom: 6rem;
   text-align: center;
   color: #fff;
-  background-image: url("../assets/img/header-bg.jpg");
+  background-image: url("../assets/img/header2.jpg");
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
