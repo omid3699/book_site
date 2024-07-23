@@ -36,7 +36,7 @@
                     <td>{{ book.name | truncatechars:20 }}</td>
                     <td>{{ book.author_name }}</td>
                     <td>{{ book.facolty }}</td>
-                    <td>{{ book.uploaded_by }}</td>
+                    <td>{{ book.uploaded_by.username }}</td>
                     <td>{{ book.created }}</td>
                     <td>
                       <a href="{% url 'books:book_detail' pk=book.pk %}" class="btn btn-success mx-1"><i class="fas fa-play"></i></a>

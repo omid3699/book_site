@@ -39,8 +39,7 @@
                     <li class="nav-item">
                         <a href="{% url 'books:facolty_list' %}" class="nav-link">پوهنځی ها</a>
                     </li>
-                    <li class="nav-item"><a href="{% url 'accounts:logout' %}" class="nav-link btn btn-danger">خروج از
-                            سیستم</a></li>
+                   
                     {% if not request.user.is_student or request.user.is_superuser %}
                     <li class="nav-item"><a href="{% url 'accounts:all_books' %}" class="nav-link">لیست کتاب ها</a></li>
                     {% endif %}
@@ -51,6 +50,8 @@
                     </li>
                     <li class="nav-item"><a href="{% url 'accounts:student_list' %}" class="nav-link">لیست محصلین</a>
                     </li>
+                    <li class="nav-item"><a href="{% url 'accounts:logout' %}" class="nav-link btn btn-danger">خروج از
+                            سیستم</a></li>
                     {% endif %}
                     {% else %}
                     <li class="nav-item"><a href="{% url 'accounts:register' %}" class="nav-link btn btn-success"> ایجاد

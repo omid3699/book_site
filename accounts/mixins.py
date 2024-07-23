@@ -11,6 +11,6 @@ class SuperuserOnlyMixin:
 
 class SuperuserOrTeacherMixin:
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_superuser and request.user.is_superuser.is_student:
+        if not request.user.is_superuser and request.user.is_student:
             return redirect(reverse_lazy("books:home"))
         return super().dispatch(request, *args, **kwargs)

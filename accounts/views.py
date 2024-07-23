@@ -61,9 +61,9 @@ class AddBookView(LoginRequiredMixin, SuperuserOrTeacherMixin, CreateView):
         book.uploaded_by = user
 
         # If the user is not a superuser and not a student, assign the user's faculty to the book
-        if not user.is_superuser and not user.student:
-            book.faculty = (
-                user.faculty
+        if not user.is_superuser and not user.is_student:
+            book.facolty = (
+                user.facolty
             )  # Corrected the typo from "facolty" to "faculty"
 
         # Check if a PDF file was uploaded
@@ -110,7 +110,7 @@ class UpdateBook(LoginRequiredMixin, SuperuserOrTeacherMixin, UpdateView):
         user = self.request.user
         book = form.save(commit=False)
         book.uploaded_by = user
-        if not user.is_superuser and not user.student:
+        if not user.is_superuser and not user.is_student:
             book.facolty = user.facolty
         book.save()
         return redirect(reverse_lazy("accounts:all_books"))
