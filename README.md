@@ -9,6 +9,14 @@ git clone https://github.com/omid3699/book_site.git
 ```sh
 cd book_site
 ```
+## create and activate virtualenv
+```sh
+virttalenv .venv
+# in linux
+source .venv/bin/activate
+# in windows
+.venv\scripts\activate
+```
 ## migrate the database
 ```sh
 python manage.py migrate
@@ -18,3 +26,5 @@ python manage.py migrate
 ```sh
 python mange.py runserver
 ```
+
+
