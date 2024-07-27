@@ -33,21 +33,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="/">خانه</a></li>
+                    <li class="nav-item"><a class="nav-link text-success fw-bold" href="/">خانه</a></li>
 
                     {% if request.user.is_authenticated %}
                         <li class="nav-item">
-                            <a href="{% url 'books:facolty_list' %}" class="nav-link">پوهنځی ها</a>
+                            <a href="{% url 'books:facolty_list' %}" class="nav-link text-success fw-bold">پوهنځی ها</a>
                         </li>
                         {% if not request.user.is_student or request.user.is_superuser %}
-                            <li class="nav-item"><a href="{% url 'accounts:all_books' %}" class="nav-link">لیست کتاب ها</a></li>
+                            <li class="nav-item"><a href="{% url 'accounts:all_books' %}" class="nav-link text-success fw-bold">لیست کتاب ها</a></li>
                         {% endif %}
                         {% if request.user.is_superuser %}
-                            <li class="nav-item"><a href="{% url 'accounts:facolties' %}" class="nav-link">لیست پوهنځی ها</a>
+                            <li class="nav-item"><a href="{% url 'accounts:facolties' %}" class="nav-link text-success fw-bold">لیست پوهنځی ها</a>
                             </li>
-                            <li class="nav-item"><a href="{% url 'accounts:teacher_list' %}" class="nav-link">لیست استاد ها</a>
+                            <li class="nav-item"><a href="{% url 'accounts:teacher_list' %}" class="nav-link text-success fw-bold">لیست استاد ها</a>
                             </li>
-                            <li class="nav-item"><a href="{% url 'accounts:student_list' %}" class="nav-link">لیست محصلین</a>
+                            <li class="nav-item"><a href="{% url 'accounts:student_list' %}" class="nav-link text-success fw-bold">لیست محصلین</a>
                             </li>
                     
                         {% endif %}
@@ -65,8 +65,6 @@
         </div>
     </nav>
 
-    <!-- search-->
-    <!-- Portfolio Grid-->
     {% block content %}
     {% endblock content %}
     <!-- Bootstrap core JS-->
