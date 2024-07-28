@@ -214,12 +214,25 @@ class AddStudent(LoginRequiredMixin, SuperuserOnlyMixin, CreateView):
 
 
 class LoginView(View):
+    def get_user(self, username):
+        user = None
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(email=username)
+            except User.DoesNotExist:
+                ...
+        return user
+
     def get(self, request):
         if request.user.is_authenticated:
             return redirect(reverse_lazy("books:home"))
         return render(request=request, template_name="accounts/login.html")
 
     def post(self, request):
+        next_page = request.GET.get("next")
+
         usernme_errors = []
         password_erros = []
         errors = []
@@ -232,17 +245,18 @@ class LoginView(View):
         if not password:
             password_erros.append("لطفا پسورد را وارد کنید")
 
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            user = User.objects.get(email=username)
-        except User.DoesNotExist:
+        user = self.get_user(username=username)
+        if not user:
             errors.append("کاربری با مشخصات داده شده پیدا نشد")
-        if user.check_password(password):
-            login(request=request, user=user)
-            return redirect(reverse_lazy("books:home"))
         else:
-            password_erros.append("پسورد وارد شده اشتباه میباشد")
+            if user.check_password(password):
+                login(request=request, user=user)
+                if next_page:
+                    return redirect(next_page)
+
+                return redirect(reverse_lazy("books:home"))
+            else:
+                password_erros.append("پسورد وارد شده اشتباه میباشد")
         return render(
             request=request,
             template_name="accounts/login.html",

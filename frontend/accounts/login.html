@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% include 'books/partials/header.html' %}
 <section class="page-section">
   <div class="container">
     <div class="row">
       <div class="col-6 mx-auto">
         <form method="post">
           {% for err in errors %}
-            <div class="alert alert-danger">err</div>
+            <div class="alert alert-danger text-center my-2">{{ err }}</div>
           {% endfor %}
           {% csrf_token %}
           <div class="form-group">
@@ -17,7 +16,7 @@
               class="form-control input input-lg p-3 text-center text-success" placeholder="نام کاربری یا ایمیل">
             {% if username_erros %}
               {% for error in username_erros %}
-                <div class="alert alert-danger">{{ error }}</div>
+                <div class="alert alert-danger text-center my-2">{{ err }}</div>
               {% endfor %}
             {% endif %}
           </div>
@@ -26,8 +25,8 @@
             <input type="password" name="password" id="password"
               class="form-control input input-lg p-3 text-center text-success" placeholder="رمز عبور" required>
             {% if password_erros %}
-              {% for error in password_erros %}
-                <div class="alert alert-danger">{{ error }}</div>
+              {% for err in password_erros %}
+                <div class="alert alert-danger text-center my-2">{{ err }}</div>
               {% endfor %}
             {% endif %}
           </div>

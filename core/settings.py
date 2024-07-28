@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-@v_%ae_8+h4@_&m54s1)^je@f6mf1))9f6e3eucft#kt3!x9b$"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # True for development False for Production
+DEBUG = True  # True for development False for Production
 
 ALLOWED_HOSTS = ["*"]
 
@@ -105,13 +105,17 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "accounts.User"
-LOGIN_URL = "accounts/login"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/accounts/login"
+
+
+# settings for user sessions
+SESSION_COOKIE_AGE = 300  # 300 sec = 5 min
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = "fa-ir"
+LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
 
