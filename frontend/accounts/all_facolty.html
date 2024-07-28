@@ -2,23 +2,22 @@
 
 
 {% block content %}
-{% include 'books/partials/header.html' %}
 <section class="page-section">
   <div class="container">
     <div class="row">
       <div class="col-12">
       </div>
       <div class="col-12">
-        <a href="{% url 'accounts:create_facolty' %}" class="btn btn-success mb-3" style="display: block; border: 1px blue solid; border-radius: 5px;"><i class="fas fa-plus p-1 m-1"></i>افزودن پوهنحًی جدید</a>
+        <a href="{% url 'accounts:create_facolty' %}" class="btn btn-success mb-3" style="display: block; border: 1px blue solid; border-radius: 5px;"><i class="fas fa-plus p-1 m-1"></i>افزودن پوهنځی جدید</a>
         <div class="card card-primary shadow">
           <div class="card-header">
-            <h3 class="card-title text-black text-center">لیست پوهنحًی  ها</h3>
+            <h3 class="card-title text-black text-center">لیست پوهنځی  ها</h3>
           </div>
           <div class="card-body">
             <table class="table table-head-fixed ">
               <thead>
                 <tr>
-                  <th class="text-primary">نام پوهنحًی</th>
+                  <th class="text-primary">نام پوهنځی</th>
                   <th class="text-primary">تعداد کتاب</th>
                   <th class="text-primary">تعداد محصل</th>
                   <th class="text-primary">تعداد استاد</th>

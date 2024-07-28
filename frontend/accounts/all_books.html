@@ -15,7 +15,7 @@
             {% if request.user.is_superuser %}
               <h3 class="card-title text-black text-center">لیست تمام کتاب ها</h3>
             {% elif not request.user.student %}
-              <h3 class="card-title text-black text-center">{{ request.user.facolty }} لیست کتاب های پوهنحًی</h3>
+              <h3 class="card-title text-black text-center">{{ request.user.facolty }} لیست کتاب های پوهنځی</h3>
             {% endif %}
           </div>
           <div class="card-body">
@@ -24,7 +24,7 @@
                 <tr>
                   <th class="text-primary">نام کتاب</th>
                   <th class="text-primary">نام نویسنده</th>
-                  <th class="text-primary">پوهنحًی</th>
+                  <th class="text-primary">پوهنځی</th>
                   <th class="text-primary">آپلود شده توسط</th>
                   <th class="text-primary">تاریخ آپلود</th>
                   <th class="text-primary">ابزار ها</th>
