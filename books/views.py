@@ -35,7 +35,7 @@ class FacoltyList(LoginRequiredMixin, ListView):
     template_name = "books/facolty_list.html"
     model = Facolty
     queryset = Facolty.objects.all()
-    context_object_name = "facolty_list"
+    context_object_name = "facolties"
 
 
 @login_required
