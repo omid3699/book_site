@@ -6,7 +6,7 @@
             </div>
             <div class="row text-center">
                 <div class="col-8 mx-auto">
-                    <form action="{% url 'books:search' %}" class="form row">
+                    <form hx-trigger="submit" hx-get="{% url 'books:search' %}" hx-target="#portfolio" class="form row">
                         <div class="form-group mb-md-0 col-10">
                             <!-- Phone number input-->
                             <input class="form-control shadow" id="query" type="text" name="q"
