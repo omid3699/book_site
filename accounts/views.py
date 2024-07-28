@@ -1,13 +1,14 @@
 import os
 
+from django.contrib.auth import aauthenticate, login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView, View
 from pdf2image import convert_from_path
 from PIL import Image
 
@@ -210,3 +211,44 @@ class AddStudent(LoginRequiredMixin, SuperuserOnlyMixin, CreateView):
     form_class = RegisterForm
     template_name = "accounts/add_student.html"
     success_url = reverse_lazy("accounts:student_list")
+
+
+class LoginView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect(reverse_lazy("books:home"))
+        return render(request=request, template_name="accounts/login.html")
+
+    def post(self, request):
+        usernme_errors = []
+        password_erros = []
+        errors = []
+
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        if not username:
+            usernme_errors.append("نام کاربری خالی بوده نمیتواند")
+        if not password:
+            password_erros.append("لطفا پسورد را وارد کنید")
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            user = User.objects.get(email=username)
+        except User.DoesNotExist:
+            errors.append("کاربری با مشخصات داده شده پیدا نشد")
+        if user.check_password(password):
+            login(request=request, user=user)
+            return redirect(reverse_lazy("books:home"))
+        else:
+            password_erros.append("پسورد وارد شده اشتباه میباشد")
+        return render(
+            request=request,
+            template_name="accounts/login.html",
+            context={
+                "username_erros": usernme_errors,
+                "password_erros": password_erros,
+                "errors": errors,
+            },
+        )

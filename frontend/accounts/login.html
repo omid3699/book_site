@@ -6,15 +6,17 @@
   <div class="container">
     <div class="row">
       <div class="col-6 mx-auto">
-        {% include 'accounts/partials/errors.html' %}
         <form method="post">
+          {% for err in errors %}
+            <div class="alert alert-danger">err</div>
+          {% endfor %}
           {% csrf_token %}
           <div class="form-group">
-            <label for="username" class="text-uppercase text-primary text-center fw-bold">Username</label>
+            <label for="username" class="text-uppercase text-primary text-center fw-bold">Username or Email</label>
             <input type="text" name="username" id="username" required
-              class="form-control input input-lg p-3 text-center text-success" placeholder="نام کاربری">
-            {% if form.username.erros %}
-              {% for error in form.username.erros %}
+              class="form-control input input-lg p-3 text-center text-success" placeholder="نام کاربری یا ایمیل">
+            {% if username_erros %}
+              {% for error in username_erros %}
                 <div class="alert alert-danger">{{ error }}</div>
               {% endfor %}
             {% endif %}
@@ -23,8 +25,8 @@
             <label for="password" class="text-uppercase text-primary text-center fw-bold">Password</label>
             <input type="password" name="password" id="password"
               class="form-control input input-lg p-3 text-center text-success" placeholder="رمز عبور" required>
-            {% if form.password.erros %}
-              {% for error in form.password.erros %}
+            {% if password_erros %}
+              {% for error in password_erros %}
                 <div class="alert alert-danger">{{ error }}</div>
               {% endfor %}
             {% endif %}
