@@ -1,14 +1,17 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 
 from .models import Book, Facolty
 
 # Create your views here.
 
-# MVC = Model View Controler & MVT = model View Template
+
+def handle_404_view(request, exception):
+    return render(request=request, template_name="404.html", status=404)
 
 
 @login_required
