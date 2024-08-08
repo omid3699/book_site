@@ -5,8 +5,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.storage import default_storage
-from django.core.files.uploadedfile import (InMemoryUploadedFile,
-                                            TemporaryUploadedFile)
+from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, View
@@ -16,7 +15,7 @@ from PIL import Image
 from books.models import Book, Facolty
 
 from .forms import BookForm, FacoltyForm, RegisterForm
-from .mixins import SuperuserOnlyMixin, SuperuserOrTeacherMixin
+from .mixins import SuperuserOnlyMixin, SuperuserOrOwnerMixin, SuperuserOrTeacherMixin
 from .models import User
 
 # Create your views here.
@@ -38,6 +37,7 @@ class RegisterView(CreateView):
         login(request=self.request, user=user)
         return redirect("/")
 
+
 class AllBooksView(LoginRequiredMixin, SuperuserOrTeacherMixin, ListView):
     template_name = "accounts/all_books.html"
     model = Book
@@ -48,7 +48,7 @@ class AllBooksView(LoginRequiredMixin, SuperuserOrTeacherMixin, ListView):
         if user.is_superuser:
             return Book.objects.all()
         elif not user.is_student:
-            return Book.objects.filter(facolty=user.facolty)
+            return Book.objects.filter(uploaded_by=user)
         else:
             return redirect(reverse_lazy("books:home"))
 
@@ -103,7 +103,9 @@ class AddBookView(LoginRequiredMixin, SuperuserOrTeacherMixin, CreateView):
         return redirect(reverse_lazy("accounts:all_books"))
 
 
-class UpdateBook(LoginRequiredMixin, SuperuserOrTeacherMixin, UpdateView):
+class UpdateBook(
+    LoginRequiredMixin, SuperuserOrTeacherMixin, SuperuserOrOwnerMixin, UpdateView
+):
     template_name = "accounts/edit_book.html"
     form_class = BookForm
     model = Book
@@ -124,7 +126,7 @@ def delete_book(request, pk):
         return redirect("books:home")
     book = get_object_or_404(Book, pk=pk)
     if not request.user.is_superuser:
-        if not book.facolty == request.user.facolty:
+        if not book.uploaded_by == request.user:
             return redirect("accounts:all_books")
     book.delete()
     return redirect("accounts:all_books")

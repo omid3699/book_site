@@ -14,3 +14,15 @@ class SuperuserOrTeacherMixin:
         if not request.user.is_superuser and request.user.is_student:
             return redirect(reverse_lazy("books:home"))
         return super().dispatch(request, *args, **kwargs)
+
+
+class SuperuserOrOwnerMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_superuser and request.user.is_student:
+            return redirect(reverse_lazy("books:home"))
+
+        book = self.get_object()
+        if book.uploaded_by != request.user:
+            return redirect(reverse_lazy("books:home"))
+
+        return super().dispatch(request, *args, **kwargs)
