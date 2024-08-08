@@ -109,7 +109,7 @@ LOGIN_URL = "/accounts/login"
 
 
 # settings for user sessions
-SESSION_COOKIE_AGE = 300  # 300 sec = 5 min
+# SESSION_COOKIE_AGE = 300  # 300 sec = 5 min
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Internationalization

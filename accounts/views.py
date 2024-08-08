@@ -5,7 +5,8 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.storage import default_storage
-from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
+from django.core.files.uploadedfile import (InMemoryUploadedFile,
+                                            TemporaryUploadedFile)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, View
@@ -33,9 +34,9 @@ class RegisterView(CreateView):
     template_name = "accounts/register.html"
 
     def form_valid(self, form):
-        form = form
-        return super().form_valid(form)
-
+        user = form.save()
+        login(request=self.request, user=user)
+        return redirect("/")
 
 class AllBooksView(LoginRequiredMixin, SuperuserOrTeacherMixin, ListView):
     template_name = "accounts/all_books.html"
