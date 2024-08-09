@@ -1,23 +1,10 @@
 from django.urls import path, reverse_lazy
 
-from .views import (
-    AddBookView,
-    AddStudent,
-    AddTeacher,
-    AllBooksView,
-    AllFacoltyView,
-    CreateFacolty,
-    LoginView,
-    RegisterView,
-    StudentList,
-    TeacherList,
-    UpdateBook,
-    UpdateFacolty,
-    delete_book,
-    delete_facolty,
-    logout,
-    user_actions,
-)
+from .views import (AddBookView, AddStudent, AddTeacher, AllBooksView,
+                    AllFacoltyView, CreateFacolty, LoginView, RegisterView,
+                    StudentList, TeacherList, UpdateBook, UpdateFacolty,
+                    UserSearchView, delete_book, delete_facolty, logout,
+                    user_actions)
 
 app_name = "accounts"
 
@@ -38,4 +25,5 @@ urlpatterns = [
     path("students/", StudentList.as_view(), name="student_list"),
     path("students/add", AddStudent.as_view(), name="student_add"),
     path("useractions/<int:pk>/<str:action>", user_actions, name="actions"),
+    path("search/", UserSearchView.as_view(), name="search"),
 ]

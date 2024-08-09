@@ -5,7 +5,9 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.storage import default_storage
-from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
+from django.core.files.uploadedfile import (InMemoryUploadedFile,
+                                            TemporaryUploadedFile)
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, View
@@ -15,7 +17,8 @@ from PIL import Image
 from books.models import Book, Facolty
 
 from .forms import BookForm, FacoltyForm, RegisterForm
-from .mixins import SuperuserOnlyMixin, SuperuserOrOwnerMixin, SuperuserOrTeacherMixin
+from .mixins import (SuperuserOnlyMixin, SuperuserOrOwnerMixin,
+                     SuperuserOrTeacherMixin)
 from .models import User
 
 # Create your views here.
@@ -268,4 +271,29 @@ class LoginView(View):
                 "password_erros": password_erros,
                 "errors": errors,
             },
+        )
+
+
+class UserSearchView(SuperuserOnlyMixin, View):
+    def post(self, request):
+        account_type = request.POST.get("type")
+        kw = request.POST.get("q")
+        users = User.objects.filter(
+            Q(username__icontains=kw)
+            | Q(first_name__icontains=kw)
+            | Q(last_name__icontains=kw)
+            | Q(email=kw)
+        )
+        match account_type:
+            case "student":
+                users = users.filter(is_student=True)
+
+            case "teacher":
+                users = users.filter(is_student=False)
+            case _:
+                users = []
+        return render(
+            request=request,
+            template_name="accounts/search_result.html",
+            context={"users": users},
         )

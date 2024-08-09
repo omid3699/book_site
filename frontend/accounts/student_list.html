@@ -1,55 +1,81 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="page-section">
+
+<section class="page-section my-4">
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <div class="col-12">
-        <a href="{% url 'accounts:student_add' %}" class="btn btn-success mb-3" style="display: block; border: 1px blue solid; border-radius: 5px;"><i class="fas fa-plus p-1 m-1"></i>افزودن محصل جدید</a>
-        <div class="card card-primary shadow">
-          <div class="card-header">
-              <h3 class="card-title text-black text-center">لیست تمام محصلین</h3>
-          </div>
-          <div class="card-body">
-            <table class="table table-head-fixed ">
-              <thead>
-                <tr>
-                  <th class="text-primary">نام محصل</th>
-                  <th class="text-primary">پوهنځی</th>
-                  <th class="text-primary">آدرس ایمیل</th>
-                  <th class="text-primary">وضعیت</th>
-                  <th class="text-primary">ابزار ها</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for student in students %}
-                  <tr>
-                    <td>{{ student.get_full_name }}</td>
-                    <td>{{ student.facolty }}</td>
-                    <td>{{ student.email }}</td>
-                    <td>
-                      {% if student.is_active %}
-                        فعال
-                      {% else %}
-                        غیر فعال
-                      {% endif %}
-                    </td>
-                    <td>
-                      {% if student.is_active %}
-                        <a href="{% url 'accounts:actions' pk=student.pk action='deactivate' %}" class="btn btn-primary mx-1"><i class="fas fa-times"></i></a>
-                      {% else %}
-                        <a href="{% url 'accounts:actions' pk=student.pk action='activate' %}" class="btn btn-success mx-1"><i class="fas fa-check"></i></a>
-                      {% endif %}
-                      <a href="{% url 'accounts:actions' pk=student.pk action='delete' %}" class="btn btn-danger mx-1"><i class="fas fa-trash"></i></a>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+        <div class="col-12 my-4">
+          <div class="col-10 mx-auto">
+            <form hx-trigger="submit" hx-post="{% url 'accounts:search' %}" hx-target="#list" class="form row">
+              <div class="form-group mb-md-0 col-10">
+                {% csrf_token %}
+                <input type="hidden" name="type" value="student">
+                <!-- Phone number input-->
+                <input class="form-control shadow" id="query" type="text" name="q"
+                  placeholder="برای جستوجو نام کاربری یا ایمیل یا نام و نام خوانوادگی شخص مورد نظر را وارد کنید"
+                  data-sb-validations="required" style="height: 3.5rem;" />
+                <div class="invalid-feedback" data-sb-feedback="query:required">این فیلد الزامی میباشد.
+                </div>
+              </div>
+              <div class="form-group col-2">
+                <button type="submit" class="btn btn-primary form-control shadow"
+                  style="height: 3.5rem;">جستوجو</button>
+              </div>
+            </form>
           </div>
         </div>
-      </div>
+        <div class="col-12">
+          <a href="{% url 'accounts:student_add' %}" class="btn btn-success mb-3"
+            style="display: block; border: 1px blue solid; border-radius: 5px;"><i
+              class="fas fa-plus p-1 m-1"></i>افزودن محصل جدید</a>
+          <div class="card card-primary shadow">
+            <div class="card-header">
+              <h3 class="card-title text-black text-center">لیست تمام محصلین</h3>
+            </div>
+            <div class="card-body">
+              <table class="table table-head-fixed ">
+                <thead>
+                  <tr>
+                    <th class="text-primary">نام محصل</th>
+                    <th class="text-primary">پوهنځی</th>
+                    <th class="text-primary">آدرس ایمیل</th>
+                    <th class="text-primary">وضعیت</th>
+                    <th class="text-primary">ابزار ها</th>
+                  </tr>
+                </thead>
+                <tbody id="list">
+                  {% for student in students %}
+                    <tr>
+                      <td>{{ student.get_full_name }}</td>
+                      <td>{{ student.facolty }}</td>
+                      <td>{{ student.email }}</td>
+                      <td>
+                        {% if student.is_active %}
+                        فعال
+                        {% else %}
+                        غیر فعال
+                        {% endif %}
+                      </td>
+                      <td>
+                        {% if student.is_active %}
+                        <a href="{% url 'accounts:actions' pk=student.pk action='deactivate' %}"
+                          class="btn btn-primary mx-1"><i class="fas fa-times"></i></a>
+                        {% else %}
+                        <a href="{% url 'accounts:actions' pk=student.pk action='activate' %}"
+                          class="btn btn-success mx-1"><i class="fas fa-check"></i></a>
+                        {% endif %}
+                        <a href="{% url 'accounts:actions' pk=student.pk action='delete' %}"
+                          class="btn btn-danger mx-1"><i class="fas fa-trash"></i></a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
