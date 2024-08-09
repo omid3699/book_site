@@ -62,6 +62,7 @@
                         <a href="{% url 'accounts:actions' pk=teacher.pk action='activate' %}" class="btn btn-success mx-1"><i class="fas fa-check"></i></a>
                       {% endif %}
                       <a href="{% url 'accounts:actions' pk=teacher.pk action='delete' %}" class="btn btn-danger mx-1"><i class="fas fa-trash"></i></a>
+                      <a href="{% url 'accounts:update_user' pk=teacher.pk %}" class="btn btn-secondary mx-1"><i class="fas fa-edit"></i></a>
                     </td>
                   </tr>
                 {% endfor %}

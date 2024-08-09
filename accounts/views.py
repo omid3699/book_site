@@ -5,9 +5,10 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.storage import default_storage
-from django.core.files.uploadedfile import (InMemoryUploadedFile,
-                                            TemporaryUploadedFile)
+from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
 from django.db.models import Q
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, View
@@ -16,9 +17,8 @@ from PIL import Image
 
 from books.models import Book, Facolty
 
-from .forms import BookForm, FacoltyForm, RegisterForm
-from .mixins import (SuperuserOnlyMixin, SuperuserOrOwnerMixin,
-                     SuperuserOrTeacherMixin)
+from .forms import BookForm, FacoltyForm, RegisterForm, UserUpdateForm
+from .mixins import SuperuserOnlyMixin, SuperuserOrOwnerMixin, SuperuserOrTeacherMixin
 from .models import User
 
 # Create your views here.
@@ -297,3 +297,17 @@ class UserSearchView(SuperuserOnlyMixin, View):
             template_name="accounts/search_result.html",
             context={"users": users},
         )
+
+
+class UpdateUserView(SuperuserOnlyMixin, UpdateView):
+    form_class = UserUpdateForm
+    template_name = "accounts/update_user.html"
+    model = User
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        user = form.save(commit=False)
+        password = self.request.POST.get("password")
+        if password:
+            user.set_password(password)
+        user.save()
+        return redirect("/")

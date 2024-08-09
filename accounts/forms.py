@@ -1,8 +1,8 @@
 from dataclasses import fields
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
-from django.forms import ModelForm
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.forms import ModelForm, PasswordInput
 
 from books.models import Book, Facolty
 
@@ -43,3 +43,15 @@ class FacoltyForm(ModelForm):
     class Meta:
         model = Facolty
         fields = ["name"]
+
+
+class UserUpdateForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "username",
+            "facolty",
+        ]
