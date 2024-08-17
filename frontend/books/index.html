@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% load cache %}
 
 {% block content %}
+{% cache 500 header request.user.firstname %}
 <header class="masthead">
   <div class="container">
     {% if request.user.is_authenticated and request.user.first_name %}
@@ -9,6 +11,8 @@
     <div class="masthead-heading text-uppercase">کتاب خانه آنلاین پوهنتون غزنی</div>
   </div>
 </header>
+{% endcache %}
+
 {% include 'books/partials/search.html' %}
 
 <section class="page-section bg-light" id="portfolio">
@@ -39,6 +43,7 @@
         </div>
     </div>
 </section>
+{% cache 500 about %}
 <section class="page-section bg-light" id="team">
     <div class="container">
         <div class="text-center">
@@ -103,4 +108,5 @@
         </div>
     </div>
 </section>
+{% endcache %}
 {% endblock content %}
