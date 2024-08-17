@@ -1,4 +1,5 @@
 import os
+import uuid
 
 from django.contrib.auth import aauthenticate, login
 from django.contrib.auth import logout as auth_logout
@@ -74,7 +75,7 @@ class AddBookView(LoginRequiredMixin, SuperuserOrTeacherMixin, CreateView):
         # Check if a PDF file was uploaded
         if "pdf" in self.request.FILES:
             pdf_file = self.request.FILES["pdf"]
-
+            book_id = uuid.uuid1().hex
             # Save the PDF file temporarily
             if isinstance(pdf_file, InMemoryUploadedFile):
                 pdf_path = default_storage.save(f"temp/{pdf_file.name}", pdf_file)
@@ -93,11 +94,11 @@ class AddBookView(LoginRequiredMixin, SuperuserOrTeacherMixin, CreateView):
                     # Save the cover image to the specified path
                     cover_dir = os.path.join("media", "book_covers")
                     os.makedirs(cover_dir, exist_ok=True)
-                    cover_path = os.path.join(cover_dir, f"{book.id}_cover.png")
+                    cover_path = os.path.join(cover_dir, f"{book_id}.png")
                     image.save(cover_path, "PNG")
 
                     # Set the cover attribute of the book instance
-                    book.cover = f"book_covers/{book.id}_cover.png"
+                    book.cover = f"book_covers/{book_id}.png"
 
         # Save the book instance
         book.save()
