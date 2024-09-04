@@ -1,9 +1,6 @@
 <!-- Masthead-->
 <header class="masthead">
   <div class="container">
-    {% if request.user.is_authenticated and request.user.first_name %}
-      <div class="masthead-subheading"> خوش آمدید به {{ request.user.get_short_name }} سلام</div>
-    {% endif %}
     <div class="masthead-heading text-uppercase">کتاب خانه آنلاین پوهنتون غزنی</div>
   </div>
 </header>

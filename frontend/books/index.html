@@ -4,12 +4,10 @@
 {% block content %}
 {% cache 500 header request.user.firstname %}
 <header class="masthead">
-  <div class="container">
-    {% if request.user.is_authenticated and request.user.first_name %}
-      <div class="masthead-subheading"> خوش آمدید به {{ request.user.get_short_name }} سلام</div>
-    {% endif %}
-    <div class="masthead-heading text-uppercase">کتاب خانه آنلاین پوهنتون غزنی</div>
-  </div>
+    <div class="container">
+
+        <div class="masthead-heading text-uppercase">کتاب خانه آنلاین پوهنتون غزنی</div>
+    </div>
 </header>
 {% endcache %}
 
@@ -31,7 +29,7 @@
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
                         <img class="img-fluid" src="{{ book.cover.url }}" style="height: 20rem; width: fit-content;"
-                            aria-checked="false"/>
+                            aria-checked="false" />
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">{{ book.name | truncatechars:20 }}</div>
