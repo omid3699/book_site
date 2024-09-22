@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 from django.contrib.auth.decorators import login_required
@@ -71,24 +72,31 @@ def search(request):
 def update_system(request):
     output = ""
     try:
-        # Run the 'git pull' command
-        result = subprocess.run(
-            ["git", "pull"], capture_output=True, text=True, check=True
-        )
-        result = subprocess.run(
-            ["pip", "install", "-r", "requirements.txt"],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        result = subprocess.run(
-            ["python", "-m", "manage.py", "migrate"],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        # Capture the output from stdout
-        output += result.stdout
+        if os.name == "nt":
+            result = subprocess.run(
+                ["start", "setup.bat"], capture_output=True, text=True, check=True
+            )
+            output += result.stdout
+        else:
+            result = subprocess.run(
+                ["git", "pull"], capture_output=True, text=True, check=True
+            )
+            output += result.stdout
+            result = subprocess.run(
+                ["pip", "install", "-r", "requirements.txt"],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            output += result.stdout
+            result = subprocess.run(
+                ["python", "-m", "manage.py", "migrate"],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            # Capture the output from stdout
+            output += result.stdout
     except subprocess.CalledProcessError as e:
         # Handle the error and capture the output from stderr
         output = f"An error occurred while running git pull: {e.stderr}"
