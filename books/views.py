@@ -95,7 +95,7 @@ def update_system(request):
                 text=True,
                 check=True,
             )
-            # Capture the output from stdout
+            # Capture the output from stdout!
             output += result.stdout
     except subprocess.CalledProcessError as e:
         # Handle the error and capture the output from stderr
