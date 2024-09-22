@@ -74,7 +74,7 @@ def update_system(request):
     try:
         if os.name == "nt":
             result = subprocess.run(
-                ["start", "setup.bat"], capture_output=True, text=True, check=True
+                ["cmd", "setup.bat"], capture_output=True, text=True, check=True
             )
             output += result.stdout
         else:
